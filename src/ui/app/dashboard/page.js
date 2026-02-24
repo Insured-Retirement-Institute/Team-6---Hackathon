@@ -1,13 +1,46 @@
+"use client"
+import mockData from "./bob-data-mock.json";
+
 export default function Dashboard() {
+
+  function handleClick( user ) {
+    alert( "this will open up a modal window for the AOR change for: " + user + "!!!" );
+  }
+
   return(
     <div>
       <main>
-        <h1>This is where my dashboard will be</h1>
         <div>
-          <span>Here we will display some basic cards with the logged in Agent. Just their name and such.</span>
-        </div>
-        <div>
-          <span>Down here will be a BoB style grid where we can interact with each contract/policy and open up a modal to submit a AOR change reassignment</span>
+          {/* Move this table into a seperate component file */}
+          <h2>My Business:</h2>
+          <table>
+            <thead>
+              <tr>
+                <td>Agent/Advisor Name</td>
+                <td>Agent/Advisor ID</td>
+                <td>Agency Name</td>
+                <td>Policy/Contract Number</td>
+                <td>Actions</td>
+              </tr>
+            </thead>
+            { mockData.data.map( ( data ) => (
+              <tbody>
+                <tr>
+                  <td>{ data.agentName }</td>
+                  <td>{ data.agentId }</td>
+                  <td>{ data.agencyName }</td>
+                  <td>{ data.policyNumber }</td>
+                  <td>
+                    <button onClick={ () => handleClick( data.agentName ) }>Reassign</button>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
+          </table>
+          <br/>
+          <br/>
+          <br/>
+          <a href="/dashboard/reassignment">Next page ...</a>
         </div>
       </main>
     </div>

@@ -1,6 +1,8 @@
-# Define repoistory name
+# IRI Hackathon Team 6
 
-Define description.
+Team Name: *AOR You Kidding Me?*
+
+Team Topic: Agent of Record Changes
 
 ## Get started
 We are currently in the process of standing up [SwaggerHub](https://wwww.swaggerhub.com) to host OpenAPI definitions. More to come.

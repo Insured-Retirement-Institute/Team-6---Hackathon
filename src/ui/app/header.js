@@ -12,12 +12,13 @@ import {
   Avatar,
   Button,
   Tooltip,
+  Link,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { IcecreamOutlined } from '@mui/icons-material';
 
-const pages = ['Home', 'Reports', 'Activity Log'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Dashboard', 'Reports', 'Activity Log'];
+const settings = ['Profile', 'Account', 'Logout'];
 
 export default function Header() {
 
@@ -120,7 +121,8 @@ export default function Header() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                href={ page === "Dashboard" ? "/dashboard" : "#" }
+                sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
@@ -129,7 +131,7 @@ export default function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Raja Kumarasamy" src="" />
               </IconButton>
             </Tooltip>
             <Menu

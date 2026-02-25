@@ -23,6 +23,9 @@ const reasons = [
   "Organization Restructuring"
 ];
 
+/**
+ * this doesn't play nice enough with the React Hooks on subsequent pages
+ */
 export default function Step1() {
 
   /*
@@ -55,7 +58,7 @@ export default function Step1() {
     </React.Fragment>
   );
 
-  // use the MUI <Grid/> or <Stack/> layout component
+  // use the MUI <Grid/> or <Stack/> layout component with the card
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', flexDirection: 'row', overflow: "auto", pt: 2, m: 3 }}>
@@ -125,11 +128,13 @@ export default function Step1() {
           </FormControl>
         </div>
       </Box>
+      {/*
       <div>
         <Box sx={{ m: 4, minWidth: 270, maxWidth: 450 }}>
           <Card variant="outlined">{card}</Card>
         </Box>
       </div>
+      */}
     </React.Fragment>
   );
 }

@@ -16,10 +16,14 @@ import {
   FormHelperText,
   TextField,
   MenuItem,
+  LinearProgress,
+  CircularProgress,
+  Fade,
   StepLabel
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import { useSearchParams } from 'next/navigation';
+import agentResponse from "./agent-response.json";
 
 const steps = [
   "Select Advisor & Confirm",
@@ -43,6 +47,9 @@ export default function Page() {
   const [reason, setReason] = React.useState("");
   const searchParams = useSearchParams();
   const npn = searchParams.get("npn");
+  const [loading, setLoading] = React.useState(false);
+  const [query, setQuery] = React.useState('idle');
+  const timerRef = React.useRef(undefined);
 
   const handleReasonChange = (event) => {
     setReason(event.target.value);
@@ -70,6 +77,7 @@ export default function Page() {
     }
     */
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    handleClickQuery();
   };
 
   const postSuccessMessage = () => {
@@ -91,6 +99,33 @@ export default function Page() {
       return;
     }
     setOpen(false);
+  };
+
+  React.useEffect(
+    () => () => {
+      clearTimeout(timerRef.current);
+    },
+    [],
+  );
+
+  const handleClickLoading = () => {
+    setLoading((prevLoading) => !prevLoading);
+  };
+
+  const handleClickQuery = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    if (query !== 'idle') {
+      setQuery('idle');
+      return;
+    }
+
+    setQuery('progress');
+    timerRef.current = setTimeout(() => {
+      setQuery('success');
+    }, 2000);
   };
 
   return (
@@ -182,34 +217,65 @@ export default function Page() {
             activeStep === steps.length ?
 
             <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All steps completed - you&apos;re finished
+              <Typography sx={{ m: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Box sx={{ height: 40 }}>
+        <Fade
+          in={loading}
+          style={{
+            transitionDelay: loading ? '800ms' : '0ms',
+          }}
+          unmountOnExit
+        >
+          <CircularProgress/>
+        </Fade>
+      </Box>
+      <Box sx={{ height: 40 }}>
+        {query === 'success' ? (
+          <Typography>
+            AI Agent response successfully retrieved:
+            {
+              /* display agent ai response here */
+            }
+          </Typography>
+        ) : (
+          <Fade
+            in={query === 'progress'}
+            style={{
+              transitionDelay: query === 'progress' ? '800ms' : '0ms',
+            }}
+            unmountOnExit
+          >
+            <CircularProgress/>
+          </Fade>
+        )}
+      </Box>
+    </Box>
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Box sx={{ flex: '1 1 auto' }} />
                 {/* happy path - return to the dashboard and mark the reassignment as successfully complete */}
-                <Button onClick={postSuccessMessage} href={`/dashboard?npn=${npn}&success=true`}>Return to Dashboard</Button>
+                <Button href={`/dashboard?npn=${npn}&success=true`}>Return to Dashboard</Button>
               </Box>
             </React.Fragment>
-
             :
-            ""
-          /* else don't show anything */}
+            /* else display the 'Next' / 'Confirm' options */
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, m: 2 }}>
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+              <Box sx={{ flex: '1 1 auto' }} />
+              <Button onClick={handleNext}>
+                {activeStep === steps.length - 1 ? 'Confirm' : 'Next'}
+              </Button>
+            </Box>
+          }
 
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, m: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Confirm' : 'Next'}
-            </Button>
-          </Box>
         </React.Fragment>
       }
       <Snackbar open={open} autoHideDuration={8000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>

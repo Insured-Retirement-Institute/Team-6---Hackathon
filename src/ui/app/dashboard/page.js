@@ -1,7 +1,7 @@
 "use client"
 import mockData from "./bob-data-mock.json";
 
-export default function Dashboard() {
+export default function Page() {
 
   function handleClick( user ) {
     alert( "this will open up a modal window for the AOR change for: " + user + "!!!" );

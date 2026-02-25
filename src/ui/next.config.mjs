@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 
-  // output: "export", // uncomment for building statically
+  output: "export", // uncomment for building statically
   reactCompiler: true,
 
 };

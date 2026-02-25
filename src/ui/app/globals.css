@@ -1,64 +1,9 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-table {
-  background-color: #ffffff;
-  padding: 0.5em;
-}
-
-table thead tr td {
-  font-weight: bolder;
-  background-color: #8b8b8b;
-}
-
-td {
-  padding: 1em;
-  color: #0a0a0a;
-}
-
-table tr:nth-child(odd) {
-  background-color: #f2f2f2;
-}
-
-table tr:nth-child(even) {
-  background-color: #b1b1b1;
+button:hover {
+  background-color: #ddd;
 }
 
 table tr:hover {
   background-color: #ddd;
-}
-
-button {
-  padding: 0.5em;
-}
-
-button:hover {
-  background-color: #818181dd;
-}
-
-select {
-  padding: 1em;
-}
-
-input {
-  padding: 1em;
-}
-
-label {
-  font-size: smaller;
-}
-
-main {
-  margin: 3em;
 }
 
 html,
@@ -86,8 +31,14 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+header {
+  padding: 1em;
+  margin-bottom: 3em;
+  background-color: lightslategray;
+}
+
+footer {
+  padding: 1em;
+  margin-top: 3em;
+  background-color: lightslategray;
 }

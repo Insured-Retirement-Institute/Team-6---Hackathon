@@ -1,6 +1,16 @@
 "use client"
 import * as React from 'react';
-import { Box, Stepper, Step, StepButton, Button, Typography, StepLabel } from '@mui/material';
+import {
+  Box,
+  Stepper,
+  Step,
+  StepButton,
+  Button,
+  Typography,
+  Snackbar,
+  Alert,
+  StepLabel
+} from '@mui/material';
 import Step1 from './step1';
 
 const steps = [
@@ -13,9 +23,14 @@ const steps = [
 export default function Page() {
 
   const [activeStep, setActiveStep] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if( activeStep === 3 ) {
+      setOpen( true );
+    }
   };
 
   const handleBack = () => {
@@ -24,6 +39,13 @@ export default function Page() {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -68,6 +90,16 @@ export default function Page() {
           </Box>
         </React.Fragment>
       )}
+      <Snackbar open={open} autoHideDuration={8000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          Success! Your reassignment is now complete.
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

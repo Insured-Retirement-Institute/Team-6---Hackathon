@@ -57,7 +57,7 @@ export default function Step1() {
 
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', flexDirection: 'column', pt: 2, m: 3 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, m: 3 }}>
         <div>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-helper-label">Reason</InputLabel>
@@ -109,7 +109,7 @@ export default function Step1() {
         </div>
       </Box>
       <div>
-        <Box sx={{ m: 1, minWidth: 270, maxWidth: 450 }}>
+        <Box sx={{ m: 4, minWidth: 270, maxWidth: 450 }}>
           <Card variant="outlined">{card}</Card>
         </Box>
       </div>

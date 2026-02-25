@@ -1,0 +1,17 @@
+curl --location 'http://producer-eligibility.us-east-1.elasticbeanstalk.com/v1/producer/eligibility' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer {{token}}' \
+--data '{
+  "messageInformation": {
+    "sender": "JPMChase",
+    "receiver": "Corebridge",
+    "trackingNumber": "Track-20260224-001"
+  },
+  "agentInfo": [
+    {
+      "contractNumber": "CONT10001",
+      "roleCode": "PA",
+      "npn": "1234567"
+    }
+  ]
+}'

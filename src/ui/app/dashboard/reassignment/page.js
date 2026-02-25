@@ -24,13 +24,30 @@ export default function Page() {
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [open, setOpen] = React.useState(false);
-
+  const [statusMessage, setStatusMessage] = React.useState("");
+  const [statusSeverity, setStatusSeverity] = React.useState("");
+  const [isLiscensed, setIsLiscensed] = React.useState( false );
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if( activeStep === 3 ) {
-      setOpen( true );
+    // useEffect => check liscense status
+    if( activeStep === 0 ) {
+      if( !isLiscensed ) {
+        setOpen( true );
+        setStatusMessage("Your liscense is not in good order.");
+        setStatusSeverity("error");
+        // block the next step
+        //return;
+      }
+      else {
+        // continue as usual
+      }
     }
+    else if( activeStep === 3 ) {
+      setOpen( true );
+      setStatusMessage("Success! Your reassignment is now complete.");
+      setStatusSeverity("success");
+    }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -93,11 +110,11 @@ export default function Page() {
       <Snackbar open={open} autoHideDuration={8000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
         <Alert
           onClose={handleClose}
-          severity="success"
+          severity={statusSeverity}
           variant="filled"
           sx={{ width: '100%' }}
         >
-          Success! Your reassignment is now complete.
+          {statusMessage}
         </Alert>
       </Snackbar>
     </Box>

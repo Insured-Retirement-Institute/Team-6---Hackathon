@@ -55,9 +55,10 @@ export default function Step1() {
     </React.Fragment>
   );
 
+  // use the MUI <Grid/> or <Stack/> layout component
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, m: 3 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', overflow: "auto", pt: 2, m: 3 }}>
         <div>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-helper-label">Reason</InputLabel>
@@ -77,7 +78,7 @@ export default function Step1() {
         </div>
         <div>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <TextField id="outlined-search" label="Search" type="search"
+            <TextField id="outlined-search" label="Contract Number" type="search"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -88,12 +89,12 @@ export default function Step1() {
                 },
               }}
             />
-            <FormHelperText>* Search by name or account number</FormHelperText>
+            <FormHelperText></FormHelperText>
           </FormControl>
         </div>
         <div>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <TextField id="outlined-search" label="Search" type="search"
+            <TextField id="outlined-search" label="From Producer" type="search"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -104,7 +105,23 @@ export default function Step1() {
                 },
               }}
             />
-            <FormHelperText>* Search by name or account number</FormHelperText>
+            <FormHelperText>* Current contract owner</FormHelperText>
+          </FormControl>
+        </div>
+        <div>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <TextField id="outlined-search" label="To Producer" type="search"
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Search/>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+            <FormHelperText>* Producer to reassign contract to</FormHelperText>
           </FormControl>
         </div>
       </Box>

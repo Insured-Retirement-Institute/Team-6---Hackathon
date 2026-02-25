@@ -1,9 +1,6 @@
 button:hover {
-  background-color: #ddd;
-}
-
-table tr:hover {
-  background-color: #ddd;
+  transform: scale(1.07);
+  filter: drop-shadow(0 0 0.75rem crimson);
 }
 
 html,
@@ -29,16 +26,4 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-header {
-  padding: 1em;
-  margin-bottom: 3em;
-  background-color: lightslategray;
-}
-
-footer {
-  padding: 1em;
-  margin-top: 3em;
-  background-color: lightslategray;
 }

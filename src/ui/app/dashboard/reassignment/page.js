@@ -181,7 +181,7 @@ export default function Page() {
               </div>
               <div>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                  <TextField id="outlined-search" label="From Producer" type="search"
+                  <TextField id="outlined-search" label="From Producer" type="search" value={npn}
                     slotProps={{
                       input: {
                         endAdornment: (

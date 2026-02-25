@@ -1,0 +1,9 @@
+# Exclude source code and dev files from EB deployment bundle
+src/
+.git/
+.gitignore
+*.md
+*.log
+node_modules/
+.vscode/
+.idea/

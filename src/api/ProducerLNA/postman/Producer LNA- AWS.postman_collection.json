@@ -1,0 +1,141 @@
+{
+  "info": {
+    "_postman_id": "38852dfc-9de1-4870-a155-04799d7c7f7b",
+    "name": "Producer LNA- AWS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29900683",
+    "_collection_link": "https://go.postman.co/collection/29900683-38852dfc-9de1-4870-a155-04799d7c7f7b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "POST /v1/producer/lna - Happy Path (Individual Producer)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// Auto-generate a unique request_id each run",
+              "const uuid = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {",
+              "    const r = Math.random() * 16 | 0;",
+              "    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);",
+              "});",
+              "pm.variables.set('dynamic_request_id', uuid());",
+              "pm.variables.set('dynamic_timestamp', new Date().toISOString());"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has JSON content-type', () => {",
+              "    pm.response.to.have.header('Content-Type');",
+              "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+              "});",
+              "",
+              "pm.test('Response body contains code and description', () => {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property('code');",
+              "    pm.expect(json).to.have.property('description');",
+              "});",
+              "",
+              "pm.test('Response code is 200', () => {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.code).to.eql(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"organization\" : {\n    \"name\" : \"Family Life\",\n    \"organization_id\" : \"bfc0ab1f-6c0d-4ca7-abe5-982d0b025c49\",\n    \"imo_producer_code\" : \"\"\n  },\n  \"producer\" : {\n    \"type\" : \"individual\",\n    \"npn\" : \"28394810\",\n    \"loa\" : \"0\",\n    \"salutation\" : \"mr\",\n    \"suffix\" : \"\",\n    \"gender\" : \"female\",\n    \"first_name\" : \"Pat\",\n    \"middle_name\" : \"E\",\n    \"last_name\" : \"Sher\",\n    \"residence_state\" : \"az\",\n    \"date_of_birth\" : \"1998-01-21\",\n    \"business_name\" : \"\",\n    \"tax_identification_number\" : \"001-09-0092\",\n    \"identification_type\" : \"ssn\",\n    \"resident_license_number\" : \"00010230\",\n    \"created_date\" : \"2026-02-25T03:16:55.000000Z\",\n    \"last_nipr_updated_at\" : \"2024-08-30T12:15:06.723763Z\"\n  },\n  \"hierarchies\" : {\n    \"new\" : {\n      \"products\" : [ {\n        \"states\" : [ {\n          \"name\" : \"ky\"\n        }, {\n          \"name\" : \"ok\"\n        }, {\n          \"name\" : \"tx\"\n        } ],\n        \"hirerachy\" : [ {\n          \"name\" : \"Pat E Sher\",\n          \"nipr\" : \"00010230\",\n          \"hierarchy_type\" : \"producer\",\n          \"producer_code\" : \"0A57G\",\n          \"compensation_level\" : \"U-72.5\"\n        }, {\n          \"name\" : \"One LLC\",\n          \"nipr\" : \"20260225\",\n          \"hierarchy_type\" : \"direct_upline\",\n          \"producer_code\" : \"00VRU\",\n          \"compensation_level\" : \"J-80\"\n        } ],\n        \"product_name\" : \"GIWL\",\n        \"product_type\" : \"Insurance\",\n        \"comp_level\" : \"U-72.5\"\n      }, {\n        \"states\" : [ {\n          \"name\" : \"ky\"\n        }, {\n          \"name\" : \"ok\"\n        }, {\n          \"name\" : \"tx\"\n        } ],\n        \"hirerachy\" : [ {\n          \"name\" : \"Pat E Sher\",\n          \"nipr\" : \"00010230\",\n          \"hierarchy_type\" : \"producer\",\n          \"producer_code\" : \"0754G\",\n          \"compensation_level\" : \"L-117\"\n        }, {\n          \"name\" : \"One Stop LLC\",\n          \"nipr\" : \"20260225\",\n          \"hierarchy_type\" : \"direct_upline\",\n          \"producer_code\" : \"00URU\",\n          \"compensation_level\" : \"I-132\"\n        } ],\n        \"product_name\" : \"SIWL\",\n        \"product_type\" : \"Insurance\",\n        \"comp_level\" : \"L-117\"\n      } ]\n    }\n  },\n  \"request_details\" : {\n    \"group\" : \"20669\",\n    \"request_id\" : \"409808c4-6d91-4b98-90b0-4e6ce9419170\",\n    \"carrier_name\" : \"corebridge\",\n    \"request_type\" : \"contract_change\",\n    \"request_sub_type\" : \"\",\n    \"created_date\" : \"2026-02-25T12:13:22.000000Z\",\n    \"submitted_date\" : \"2026-02-24T12:13:22.000000Z\",\n    \"request_status\" : \"corporate_approved\",\n    \"digitaly_signed_at\" : \"2026-02-24T12:13:22.000000Z\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://producer-lna-env.eba-ummuyaxb.us-east-1.elasticbeanstalk.com/v1/producer/lna",
+          "protocol": "http",
+          "host": [
+            "producer-lna-env",
+            "eba-ummuyaxb",
+            "us-east-1",
+            "elasticbeanstalk",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "producer",
+            "lna"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "200 OK - LNA Processed",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/producer/lna",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "producer",
+                "lna"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "uuid": "1630ffef-4aff-4268-ae1c-73338eedf439"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"description\": \"Producer LNA request processed successfully\"\n}"
+        }
+      ]
+    }
+  ]
+}

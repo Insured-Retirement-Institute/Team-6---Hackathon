@@ -1,0 +1,93 @@
+curl --location 'http://producer-lna-env.eba-ummuyaxb.us-east-1.elasticbeanstalk.com/v1/producer/lna' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data '{
+  "organization" : {
+    "name" : "Family Life",
+    "organization_id" : "bfc0ab1f-6c0d-4ca7-abe5-982d0b025c49",
+    "imo_producer_code" : ""
+  },
+  "producer" : {
+    "type" : "individual",
+    "npn" : "28394810",
+    "loa" : "0",
+    "salutation" : "mr",
+    "suffix" : "",
+    "gender" : "female",
+    "first_name" : "Pat",
+    "middle_name" : "E",
+    "last_name" : "Sher",
+    "residence_state" : "az",
+    "date_of_birth" : "1998-01-21",
+    "business_name" : "",
+    "tax_identification_number" : "001-09-0092",
+    "identification_type" : "ssn",
+    "resident_license_number" : "00010230",
+    "created_date" : "2026-02-25T03:16:55.000000Z",
+    "last_nipr_updated_at" : "2024-08-30T12:15:06.723763Z"
+  },
+  "hierarchies" : {
+    "new" : {
+      "products" : [ {
+        "states" : [ {
+          "name" : "ky"
+        }, {
+          "name" : "ok"
+        }, {
+          "name" : "tx"
+        } ],
+        "hirerachy" : [ {
+          "name" : "Pat E Sher",
+          "nipr" : "00010230",
+          "hierarchy_type" : "producer",
+          "producer_code" : "0A57G",
+          "compensation_level" : "U-72.5"
+        }, {
+          "name" : "One LLC",
+          "nipr" : "20260225",
+          "hierarchy_type" : "direct_upline",
+          "producer_code" : "00VRU",
+          "compensation_level" : "J-80"
+        } ],
+        "product_name" : "GIWL",
+        "product_type" : "Insurance",
+        "comp_level" : "U-72.5"
+      }, {
+        "states" : [ {
+          "name" : "ky"
+        }, {
+          "name" : "ok"
+        }, {
+          "name" : "tx"
+        } ],
+        "hirerachy" : [ {
+          "name" : "Pat E Sher",
+          "nipr" : "00010230",
+          "hierarchy_type" : "producer",
+          "producer_code" : "0754G",
+          "compensation_level" : "L-117"
+        }, {
+          "name" : "One Stop LLC",
+          "nipr" : "20260225",
+          "hierarchy_type" : "direct_upline",
+          "producer_code" : "00URU",
+          "compensation_level" : "I-132"
+        } ],
+        "product_name" : "SIWL",
+        "product_type" : "Insurance",
+        "comp_level" : "L-117"
+      } ]
+    }
+  },
+  "request_details" : {
+    "group" : "20669",
+    "request_id" : "409808c4-6d91-4b98-90b0-4e6ce9419170",
+    "carrier_name" : "corebridge",
+    "request_type" : "contract_change",
+    "request_sub_type" : "",
+    "created_date" : "2026-02-25T12:13:22.000000Z",
+    "submitted_date" : "2026-02-24T12:13:22.000000Z",
+    "request_status" : "corporate_approved",
+    "digitaly_signed_at" : "2026-02-24T12:13:22.000000Z"
+  }
+}'

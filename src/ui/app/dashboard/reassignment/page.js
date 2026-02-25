@@ -238,7 +238,42 @@ export default function Page() {
             {
               /* display agent ai response here */
               agentResponse["Steps perfromed"].map( (item) => (
-                <div>{item}</div>
+                <div>
+                <Fade
+                  in={true}
+                  style={{
+                    transitionDelay: '100ms',
+                  }}
+                  unmountOnExit
+                >
+                  <CircularProgress/>
+                </Fade>
+                  {item}
+                </div>
+              ))
+            }
+            {
+              agentResponse["FinalOutput"].bullets.map( (item) => (
+                setTimeout( () => {
+                  <div>
+                    {item}
+                  </div>
+                }, 1000 )
+              ))
+            }
+            {
+              <div>
+                How I arrived at this conclusion: {agentResponse["FinalOutput"].explanation_of_how_i_arrived_at_this}
+              </div>
+            }
+            <div>Recommendations:</div>
+            {
+              agentResponse["FinalOutput"].unexpected_problems_and_recommendations.map( (item) => (
+                setTimeout( () => {
+                  <div>
+                    {item}
+                  </div>
+                }, 1000 )
               ))
             }
           </Typography>

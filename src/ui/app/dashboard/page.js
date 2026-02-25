@@ -42,7 +42,7 @@ export default function Page() {
   },[])
 
   return (
-    <>
+    <React.Suspense>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: "lightgrey" }}>
@@ -86,6 +86,6 @@ export default function Page() {
           {statusMessage}
         </Alert>
       </Snackbar>
-    </>
+    </React.Suspense>
   );
 }

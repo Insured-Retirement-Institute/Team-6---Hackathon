@@ -129,6 +129,7 @@ export default function Page() {
   };
 
   return (
+    <React.Suspense>
     <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep} sx={{ m: 3 }}>
         {steps.map((label, index) => {
@@ -236,6 +237,9 @@ export default function Page() {
             AI Agent response successfully retrieved:
             {
               /* display agent ai response here */
+              agentResponse["Steps perfromed"].map( (item) => (
+                <div>{item}</div>
+              ))
             }
           </Typography>
         ) : (
@@ -289,5 +293,6 @@ export default function Page() {
         </Alert>
       </Snackbar>
     </Box>
+    </React.Suspense>
   );
 }

@@ -1,0 +1,25 @@
+{
+  "messageInformation": {
+    "sender": "JPMChase",
+    "receiver": "Corebridge",
+    "trackingNumber": "TRK-2026-0001"
+  },
+  "producerInfo": {
+    "from": [
+      {
+        "contractNumber": "C10001",
+        "npn": "1234567",
+        "split": "50",
+        "roleCode": "PA"
+      }
+    ],
+    "to": [
+      {
+        "contractNumber": "C20002",
+        "npn": "7895456",
+        "split": "50",
+        "roleCode": "RM"
+      }
+    ]
+  }
+}

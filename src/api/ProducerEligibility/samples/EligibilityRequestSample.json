@@ -1,0 +1,14 @@
+{
+  "messageInformation": {
+    "sender": "JPMChase",
+    "receiver": "Corebridge",
+    "trackingNumber": "Track-20260224-001"
+  },
+  "agentInfo": [
+    {
+      "contractNumber": "CONT10001",
+      "roleCode": "PA",
+      "npn": "7654321"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+    "messageInformation": {
+        "sender": "Corebridge",
+        "receiver": "JPMChase",
+        "trackingNumber": "Track-20260224-001"
+    },
+    "eligibilityDetails": [
+        {
+            "npn": "1234567",
+            "roleCode": "PA",
+            "status": "ELIGIBLE"
+        }
+    ]
+}

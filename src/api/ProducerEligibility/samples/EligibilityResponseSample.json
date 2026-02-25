@@ -1,0 +1,20 @@
+{
+    "messageInformation": {
+        "sender": "Corebridge",
+        "receiver": "JPMChase",
+        "trackingNumber": "Track-20260224-001"
+    },
+    "eligibilityDetails": [
+        {
+            "npn": "7654321",
+            "roleCode": "PA",
+            "status": "INELIGIBLE",
+            "errors": [
+                {
+                    "errorCode": "0501",
+                    "errorDescription": "License and Appointment Not Found"
+                }
+            ]
+        }
+    ]
+}

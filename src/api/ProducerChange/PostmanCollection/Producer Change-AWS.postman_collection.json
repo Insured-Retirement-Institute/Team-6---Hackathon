@@ -1,0 +1,123 @@
+{
+  "info": {
+    "_postman_id": "a5fa915e-c60a-4e64-b1ed-0ffc937418a0",
+    "name": "Producer Change-AWS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29900683",
+    "_collection_link": "https://go.postman.co/collection/29900683-a5fa915e-c60a-4e64-b1ed-0ffc937418a0?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "POST - Submit Producer Change - AWS(200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has code field\", function () {",
+              "    var json = pm.response.json();",
+              "    pm.expect(json).to.have.property('code');",
+              "    pm.expect(json.code).to.eql(200);",
+              "});",
+              "",
+              "pm.test(\"Response has description field\", function () {",
+              "    var json = pm.response.json();",
+              "    pm.expect(json).to.have.property('description');",
+              "    pm.expect(json.description).to.be.a('string');",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messageInformation\": {\n    \"sender\": \"JPMChase\",\n    \"receiver\": \"Corebridge\",\n    \"trackingNumber\": \"TRK-2026-0001\"\n  },\n  \"producerInfo\": {\n    \"from\": [\n      {\n        \"contractNumber\": \"C10001\",\n        \"npn\": \"1234567\",\n        \"split\": \"50\",\n        \"roleCode\": \"PA\"\n      }\n    ],\n    \"to\": [\n      {\n        \"contractNumber\": \"C20002\",\n        \"npn\": \"7895456\",\n        \"split\": \"50\",\n        \"roleCode\": \"RM\"\n      }\n    ]\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://producer-change-env.eba-yrqfk37e.us-east-1.elasticbeanstalk.com/v1/producer/contractchange",
+          "protocol": "http",
+          "host": [
+            "producer-change-env",
+            "eba-yrqfk37e",
+            "us-east-1",
+            "elasticbeanstalk",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "producer",
+            "contractchange"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "200 OK - Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"messageInformation\": {\n    \"effectiveDate\": \"2026-03-01\",\n    \"sender\": \"SYSTEM_A\",\n    \"receiver\": \"SYSTEM_B\",\n    \"trackingNumber\": \"TRK-2026-0001\"\n  },\n  \"agentInfo\": {\n    \"fromAgent\": [\n      {\n        \"contractNumber\": \"C-10001\",\n        \"npn\": \"NPN-55501\",\n        \"split\": \"50\",\n        \"roleCode\": \"PA\"\n      }\n    ],\n    \"toAgent\": [\n      {\n        \"contractNumber\": \"C-20002\",\n        \"npn\": \"NPN-66602\",\n        \"split\": \"50\",\n        \"roleCode\": \"RM\"\n      }\n    ]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/producer/changes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "producer",
+                "changes"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "uuid": "76b44cc3-7b7e-4c9c-923b-e21c5cdde53f"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"code\": 200,\n  \"description\": \"Producer change processed successfully for tracking number: TRK-2026-0001\"\n}"
+        }
+      ]
+    }
+  ]
+}

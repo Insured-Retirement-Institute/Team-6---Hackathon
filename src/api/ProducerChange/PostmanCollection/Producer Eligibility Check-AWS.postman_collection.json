@@ -1,0 +1,93 @@
+{
+  "info": {
+    "_postman_id": "7f146131-22c8-42e3-96fa-f8c3d441c062",
+    "name": "Producer Eligibility Check-AWS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29900683",
+    "_collection_link": "https://go.postman.co/collection/29900683-7f146131-22c8-42e3-96fa-f8c3d441c062?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "POST /v1/producer/eligibility — Success (Eligible)-AWS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messageInformation\": {\n    \"sender\": \"JPMChase\",\n    \"receiver\": \"Corebridge\",\n    \"trackingNumber\": \"Track-20260224-001\"\n  },\n  \"agentInfo\": [\n    {\n      \"contractNumber\": \"CONT10001\",\n      \"roleCode\": \"PA\",\n      \"npn\": \"1234567\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://producer-eligibility.us-east-1.elasticbeanstalk.com/v1/producer/eligibility",
+          "protocol": "http",
+          "host": [
+            "producer-eligibility",
+            "us-east-1",
+            "elasticbeanstalk",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "producer",
+            "eligibility"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /v1/producer/eligibility — InEligible)-AWS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messageInformation\": {\n    \"sender\": \"JPMChase\",\n    \"receiver\": \"Corebridge\",\n    \"trackingNumber\": \"Track-20260224-001\"\n  },\n  \"agentInfo\": [\n    {\n      \"contractNumber\": \"CONT10001\",\n      \"roleCode\": \"PA\",\n      \"npn\": \"7654321\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://producer-eligibility.us-east-1.elasticbeanstalk.com/v1/producer/eligibility",
+          "protocol": "http",
+          "host": [
+            "producer-eligibility",
+            "us-east-1",
+            "elasticbeanstalk",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "producer",
+            "eligibility"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -51,6 +51,8 @@ export default function Page() {
   const [query, setQuery] = React.useState('idle');
   const timerRef = React.useRef(undefined);
 
+  //const agentResponse = require( "" );
+
   const handleReasonChange = (event) => {
     setReason(event.target.value);
   };
@@ -181,7 +183,7 @@ export default function Page() {
               </div>
               <div>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                  <TextField id="outlined-search" label="From Producer" type="search" value={npn}
+                  <TextField id="outlined-search" label="From Producer" type="search"
                     slotProps={{
                       input: {
                         endAdornment: (
@@ -197,7 +199,7 @@ export default function Page() {
               </div>
               <div>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                  <TextField id="outlined-search" label="To Producer" type="search"
+                  <TextField id="outlined-search" label="To Producer" type="search" value={npn}
                     slotProps={{
                       input: {
                         endAdornment: (

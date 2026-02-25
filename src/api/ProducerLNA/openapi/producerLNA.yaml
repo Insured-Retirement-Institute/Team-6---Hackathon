@@ -1,0 +1,404 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: 'Producer LNA'
+  license:
+    name: ''
+    url: 'https://github.com/testing'
+tags:
+  - name: Producer LNA
+paths:
+  '/v1/producer/lna':
+    post:
+      operationId: postProducerOnboard
+      summary: 'Perform Producer LNA'
+      description:
+        "Perform Producer LNA"
+      tags:
+        - Producer LNA
+
+      requestBody:
+        description: Request Body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProducerLNARequest'
+                   
+      responses:
+        '202':
+          description: 'Response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProducerLNAResponse'
+
+                        
+        '400':
+          description: BadRequest
+          $ref: '#/components/responses/ErrorBadRequest'
+        '401':
+          description: Unauthorized
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          description: Forbidden
+          $ref: '#/components/responses/ErrorForbidden'
+        '404':
+          description: NotFound
+          $ref: '#/components/responses/ErrorNotFound'
+       
+        '500':
+          description: InternalServerError
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '503':
+          description: ServiceUnavailable
+          $ref: '#/components/responses/ErrorServiceUnavailable'
+                      
+components:
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+          
+    ProducerLNARequest:
+      type: object
+      required:
+        - organization
+        - producer
+        - hierarchies
+        - request_details
+      properties:
+        organization:
+          $ref: '#/components/schemas/Organization'
+        producer:
+          $ref: '#/components/schemas/Producer'
+        hierarchies:
+          $ref: '#/components/schemas/Hierarchies'
+        request_details:
+          $ref: '#/components/schemas/RequestDetails'
+              
+    ProducerLNAResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+     
+   
+    Organization:
+      type: object
+      required:
+        - name
+        - organization_id
+      properties:
+        name:
+          type: string
+          description: Legal name of the organization
+
+        organization_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the organization
+        imo_producer_code:
+          type: string
+          description: Independent Marketing Organization producer code
+    Producer:
+      type: object
+      required:
+        - type
+        - npn
+        - first_name
+        - last_name
+        - residence_state
+        - date_of_birth
+        - tax_identification_number
+        - identification_type
+        - resident_license_number
+      properties:
+        type:
+          type: string
+          description: Producer entity type
+          enum:
+            - individual
+            - business
+        npn:
+          type: string
+          description: National Producer Number
+        loa:
+          type: string
+          description: Line of Authority code
+        salutation:
+          type: string
+          description: Title or salutation of the producer
+          enum:
+            - mr
+            - mrs
+            - ms
+            - dr
+            - prof
+        suffix:
+          type: string
+          description: Name suffix (e.g., Jr., Sr., III)
+        gender:
+          type: string
+          description: Gender of the producer
+          enum:
+            - male
+            - female
+            - non_binary
+            - prefer_not_to_say
+        first_name:
+          type: string
+          description: Producer's first name
+        middle_name:
+          type: string
+          description: Producer's middle name or initial
+        last_name:
+          type: string
+          description: Producer's last name
+        residence_state:
+          type: string
+          description: Two-letter US state code of residence
+          minLength: 2
+          maxLength: 2
+        date_of_birth:
+          type: string
+          format: date
+          description: Producer's date of birth (YYYY-MM-DD)
+        business_name:
+          type: string
+          description: Business entity name (required when type is business)
+        tax_identification_number:
+          type: string
+          description: SSN or EIN depending on identification_type
+        identification_type:
+          type: string
+          description: Type of tax identification
+          enum:
+            - ssn
+            - ein
+        resident_license_number:
+          type: string
+          description: Producer's resident state license number
+        created_date:
+          type: string
+          format: date-time
+          description: Timestamp when the producer record was created
+        last_nipr_updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of the last NIPR data synchronization
+    Hierarchies:
+      type: object
+      description: Product hierarchy groupings keyed by status (e.g., new, existing)
+      properties:
+        new:
+          $ref: '#/components/schemas/HierarchyGroup'
+        existing:
+          $ref: '#/components/schemas/HierarchyGroup'
+
+    HierarchyGroup:
+      type: object
+      required:
+        - products
+      properties:
+        products:
+          type: array
+          description: List of products with their associated hierarchy and states
+          items:
+            $ref: '#/components/schemas/ProductHierarchy'
+
+    ProductHierarchy:
+      type: object
+      required:
+        - product_name
+        - product_type
+        - comp_level
+        - states
+        - hirerachy
+      properties:
+        product_name:
+          type: string
+          description: Short product identifier code
+        product_type:
+          type: string
+          description: Category of the product
+        comp_level:
+          type: string
+          description: Compensation level assigned to the producer for this product
+        states:
+          type: array
+          description: States in which the producer is appointed for this product
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/StateEntry'
+        hirerachy:
+          type: array
+          description: Ordered list of hierarchy participants from producer to upline
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/HierarchyMember'
+
+    StateEntry:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Two-letter US state code
+          minLength: 2
+          maxLength: 2
+
+    HierarchyMember:
+      type: object
+      required:
+        - name
+        - nipr
+        - hierarchy_type
+        - producer_code
+        - compensation_level
+      properties:
+        name:
+          type: string
+          description: Full name of the hierarchy member
+        nipr:
+          type: string
+          description: NIPR license number of the hierarchy member
+        hierarchy_type:
+          type: string
+          description: Role of this member within the hierarchy
+          enum:
+            - producer
+            - direct_upline
+            - upline
+            - ga
+            - mga
+        producer_code:
+          type: string
+          description: Carrier-assigned producer code
+        compensation_level:
+          type: string
+          description: Compensation level code for this hierarchy member
+    # -----------------------------------------------------------------------
+    # Request Details
+    # -----------------------------------------------------------------------
+    RequestDetails:
+      type: object
+      required:
+        - group
+        - request_id
+        - carrier_name
+        - request_type
+        - request_status
+      properties:
+        group:
+          type: string
+          description: Group or agency identifier associated with the request
+        request_id:
+          type: string
+          format: uuid
+          description: Unique identifier for this onboarding request
+        carrier_name:
+          type: string
+          description: Name of the insurance carrier
+        request_type:
+          type: string
+          description: Type of onboarding request
+          enum:
+            - new_contract
+            - contract_change
+            - termination
+        request_sub_type:
+          type: string
+          description: Optional sub-classification of the request type
+        created_date:
+          type: string
+          format: date-time
+          description: Timestamp when the request was created
+        submitted_date:
+          type: string
+          format: date-time
+          description: Timestamp when the request was submitted
+        request_status:
+          type: string
+          description: Current processing status of the request
+          enum:
+            - pending
+            - submitted
+            - under_review
+            - corporate_approved
+            - corporate_rejected
+            - cancelled
+        digitaly_signed_at:
+          type: string
+          format: date-time
+          description: Timestamp when the request was digitally signed
+  
+   
+            
+  responses:
+    ErrorBadRequest:
+      description: >-
+        The server cannot or will not process the request due to an apparent
+        client error (e.g., malformed request syntax, size too large, invalid
+        request message framing, or deceptive request routing)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorUnauthorized:
+      description: >-
+        The client did not provide valid security credentials and thus wasn't
+        authenticated
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorForbidden:
+      description: >-
+        The client was authenticated but is not authorized to perform the
+        request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+ 
+    ErrorInternalServerError:
+      description: >-
+        An unexpected condition was encountered; please contact client
+        support
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorServiceUnavailable:
+      description: >-
+        The server cannot handle the request at the moment. Check the API
+        Specification for scheduled API downtimes
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorNotFound:
+      description: The specified object was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'            

@@ -1,0 +1,192 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: 'Producer Contract Change'
+  license:
+    name: 'Proprietary'
+    url: 'https://github.com/testing'
+tags:
+  - name: Producer Contract Change
+paths:
+  '/v1/producer/contractchange':
+    post:
+      operationId: postProducerChange
+      summary: 'Perform Producer Contract Change'
+      description:
+        "Perform Producer Contract Change"
+      tags:
+        - Producer Contract Change
+
+      requestBody:
+        description: Request Body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/producerRequest'
+                   
+      responses:
+        '200':
+          description: 'Response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/producerResponse'
+
+                        
+        '400':
+          description: BadRequest
+          $ref: '#/components/responses/ErrorBadRequest'
+        '401':
+          description: Unauthorized
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          description: Forbidden
+          $ref: '#/components/responses/ErrorForbidden'
+        '404':
+          description: NotFound
+          $ref: '#/components/responses/ErrorNotFound'
+       
+        '500':
+          description: InternalServerError
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '503':
+          description: ServiceUnavailable
+          $ref: '#/components/responses/ErrorServiceUnavailable'
+                      
+components:
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+          
+    messageInformation:
+      type: object
+      properties:
+        sender:
+          type: string   
+        receiver:
+          type: string   
+        trackingNumber:
+          type: string
+              
+    producerResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+     
+   
+    producerRequest:
+            type: object
+            properties:
+                messageInformation:
+                  $ref: '#/components/schemas/messageInformation'
+                producerInfo:
+                  $ref: '#/components/schemas/producerInfo'
+            
+  
+   
+    producers:
+      type: object
+      description: This object will contain information regarding identification associated to a specific party.
+      properties:
+        contractNumber: 
+          type: string
+        npn:
+          type: string
+          description: A code identifying individual type of unique identification. For example, in the USA - SSN or FEIN.
+        split:
+          type: string
+         
+        roleCode:
+          type: string
+          description: This represents the role being played by a role player.
+          enum:
+            - PA
+            - RM
+            - TM
+            - H1
+            - BG
+            - RA
+            - HA
+            
+    producerInfo:
+      type: object
+      description: This object identifies information about the agent or the individual within the agency that is getting this business (policy).
+      properties:
+        from:
+          type: array
+          items:
+            $ref: '#/components/schemas/producers'
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/producers'
+            
+  responses:
+    ErrorBadRequest:
+      description: >-
+        The server cannot or will not process the request due to an apparent
+        client error (e.g., malformed request syntax, size too large, invalid
+        request message framing, or deceptive request routing)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorUnauthorized:
+      description: >-
+        The client did not provide valid security credentials and thus wasn't
+        authenticated
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorForbidden:
+      description: >-
+        The client was authenticated but is not authorized to perform the
+        request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+ 
+    ErrorInternalServerError:
+      description: >-
+        An unexpected condition was encountered; please contact client
+        support
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorServiceUnavailable:
+      description: >-
+        The server cannot handle the request at the moment. Check the API
+        Specification for scheduled API downtimes
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorNotFound:
+      description: The specified object was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'            

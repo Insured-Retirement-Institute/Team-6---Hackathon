@@ -1,0 +1,277 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: 'Producer Eligibility Check'
+  description: API for performing producer eligibility checks.
+  contact:
+    name: API Support
+    email: support@example.com
+  license:
+    name: 'Testing 2026'
+    url: 'https://github.com/Testing'
+
+security:
+  - BearerAuth: []
+
+paths:
+  '/v1/producer/eligibility':
+    post:
+      operationId: performProducerEligibilityCheck
+      summary: 'Perform Producer Eligibility'
+      tags:
+        - Producer Eligibility Check
+      requestBody:
+        description: Request Body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/producerRequest'
+      responses:
+        '200':
+          description: 'Successful producer eligibility check response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/producerResponse'
+
+                        
+        '400':
+          $ref: '#/components/responses/ErrorBadRequest'
+        '401':
+          $ref: '#/components/responses/ErrorUnauthorized'
+        '403':
+          $ref: '#/components/responses/ErrorForbidden'
+        '404':
+          $ref: '#/components/responses/ErrorNotFound'
+        '500':
+          $ref: '#/components/responses/ErrorInternalServerError'
+        '503':
+          $ref: '#/components/responses/ErrorServiceUnavailable'
+                      
+components:
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+          
+    messageInformation:
+      type: object
+      required:
+        - sender
+        - receiver
+        - trackingNumber
+      properties:
+        sender:
+          type: string   
+        receiver:
+          type: string   
+        trackingNumber:
+          type: string
+              
+    producerResponse:
+      type: object
+      properties:
+        messageInformation:
+          $ref: '#/components/schemas/messageInformation'
+        eligibilityDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/presponse'
+          minItems: 1
+      required:
+        - messageInformation
+        - eligibilityDetails
+   
+    presponse:
+      type: object
+      description: This object identifies ProducerResponse.
+      allOf:
+        - $ref: '#/components/schemas/producerInfoForResponse'
+        - $ref: '#/components/schemas/producerStatus'
+
+    producerInfoForResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/producerNameResponse'
+        - $ref: '#/components/schemas/partyRole'
+    producerNameResponse:
+      type: object
+      required:
+        - npn
+      properties:
+        npn:
+          type: string
+    producerStatus:
+      allOf:
+        - $ref: '#/components/schemas/StatusInfo'
+        - type: object
+          required:
+            - status
+          properties:
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/producerStatusErrorList'
+              maxItems: 10
+    producerStatusErrorList:
+      required:
+        - errorCode
+      allOf:
+        - $ref: '#/components/schemas/messageStatus'
+    messageStatus:
+      type: object
+      description: >-
+        This object is used in a resonse message to provide the complete status
+        from the result of processing the matching request
+      properties:
+        errorCode:
+          type: string
+          description: >-
+            This provides the overall error code for the message. Extended
+            information might be provided depending on the code.
+
+
+        errorDescription:
+          type: string
+          description: >-
+            Message error description. General explanatory text associated with
+            the  message error code.
+          minLength: 1
+          maxLength: 2000
+    StatusInfo:
+      type: object
+      description: >-
+        A code for response messages indicating the status or result
+        following receipt of the request message.
+      properties:
+        status:
+          type: string
+          description: Status code value for the response message
+ 
+      
+    producerRequest:
+      type: object
+      required:
+        - messageInformation
+        - producerInfo
+      properties:
+        messageInformation:
+          $ref: '#/components/schemas/messageInformation'
+        producerInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/producerInfo'
+          minItems: 1
+           
+  
+   
+    partyRole:
+      type: object
+      description: This is the high level party role object used when having a generic party type.
+      properties:
+        roleCode:
+          type: string
+          description: This represents the role being played by a role player.
+          enum:
+            - PA
+            - RM
+            - TM
+            - H1
+            - BG
+            - RA
+            - HA
+    producerInfo:
+      type: object
+      description: This object identifies information about the agent or the individual within the agency that is getting this business (policy).
+      properties:
+        contractNumber:
+          type: string
+          description: Contract Id of the Account
+        roleCode:
+          type: string
+          description: This represents the role being played by a role player.
+          enum:
+            - PA
+            - RM
+            - TM
+            - H1
+            - BG
+            - RA
+            - HA
+        npn:
+          type: string
+          description: NPN Number
+
+  responses:
+    ErrorBadRequest:
+      description: >-
+        The server cannot or will not process the request due to an apparent
+        client error (e.g., malformed request syntax, size too large, invalid
+        request message framing, or deceptive request routing)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorUnauthorized:
+      description: >-
+        The client did not provide valid security credentials and thus wasn't
+        authenticated
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorForbidden:
+      description: >-
+        The client was authenticated but is not authorized to perform the
+        request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+ 
+    ErrorInternalServerError:
+      description: >-
+        An unexpected condition was encountered; please contact client
+        support
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorServiceUnavailable:
+      description: >-
+        The server cannot handle the request at the moment. Check the API
+        Specification for scheduled API downtimes
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+    ErrorNotFound:
+      description: The specified object was not found
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Error'
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -42,7 +42,7 @@ export default function Page() {
   },[])
 
   return (
-    <React.Suspense>
+    <React.Suspense fallback={<div>something went wrong</div>}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: "lightgrey" }}>

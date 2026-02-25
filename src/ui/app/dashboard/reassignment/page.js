@@ -129,7 +129,7 @@ export default function Page() {
   };
 
   return (
-    <React.Suspense>
+    <React.Suspense fallback={ <div>something went wrong</div> }>
     <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep} sx={{ m: 3 }}>
         {steps.map((label, index) => {
@@ -239,26 +239,15 @@ export default function Page() {
               /* display agent ai response here */
               agentResponse["Steps perfromed"].map( (item) => (
                 <div>
-                <Fade
-                  in={true}
-                  style={{
-                    transitionDelay: '100ms',
-                  }}
-                  unmountOnExit
-                >
-                  <CircularProgress/>
-                </Fade>
                   {item}
                 </div>
               ))
             }
             {
               agentResponse["FinalOutput"].bullets.map( (item) => (
-                setTimeout( () => {
-                  <div>
-                    {item}
-                  </div>
-                }, 1000 )
+                <div>
+                  {item}
+                </div>
               ))
             }
             {
@@ -269,11 +258,9 @@ export default function Page() {
             <div>Recommendations:</div>
             {
               agentResponse["FinalOutput"].unexpected_problems_and_recommendations.map( (item) => (
-                setTimeout( () => {
-                  <div>
-                    {item}
-                  </div>
-                }, 1000 )
+                <div>
+                  {item}
+                </div>
               ))
             }
           </Typography>

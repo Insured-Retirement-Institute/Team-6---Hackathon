@@ -45,8 +45,8 @@ export default function Page() {
   const [statusSeverity, setStatusSeverity] = React.useState("");
   const [isLiscensed, setIsLiscensed] = React.useState( false );
   const [reason, setReason] = React.useState("");
-  const searchParams = useSearchParams();
-  const npn = searchParams.get("npn");
+  //const searchParams = useSearchParams();
+  const npn = "";//searchParams.get("npn");
   const [loading, setLoading] = React.useState(false);
   const [query, setQuery] = React.useState('idle');
   const timerRef = React.useRef(undefined);

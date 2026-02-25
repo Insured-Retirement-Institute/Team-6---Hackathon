@@ -15,14 +15,14 @@ const rows = [
   { npn: "7654321", repCode: "JPMC", advisorName: 'Leland Snyder', revenue: "$22.22", lastActiveDate: "Febuary 2nd, 2022" },
 ];
 
-export default function Page() {
+export default async function Page() {
 
   const [open, setOpen] = React.useState(false);
   const [statusMessage, setStatusMessage] = React.useState("");
   const [statusSeverity, setStatusSeverity] = React.useState("");
-  const searchParams = useSearchParams();
-  const npn = searchParams.get( "npn" );
-  const success = searchParams.get( "success" );
+  //const searchParams = useSearchParams();
+  const npn = "";//searchParams.get( "npn" );
+  const success = false;//searchParams.get( "success" );
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {

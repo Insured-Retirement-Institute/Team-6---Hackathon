@@ -261,7 +261,7 @@ function DashboardContent() {
             </Box>
           </Stack>
           <Box textAlign={{ xs: 'left', sm: 'right' }}>
-            <Typography variant="caption" sx={{ opacity: 0.7 }}>As of February 25, 2026</Typography>
+            <Typography variant="caption" sx={{ opacity: 0.7 }}>As of February 26, 2026</Typography>
           </Box>
         </Stack>
       </Paper>

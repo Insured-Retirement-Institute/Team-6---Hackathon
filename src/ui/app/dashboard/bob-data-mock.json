@@ -1,52 +1,211 @@
 {
-  "data": [
+  "distributor": {
+    "name": "Arjun Sungisetty",
+    "title": "Marketing Director",
+    "email": "arjunshinde2@gmail.com",
+    "region": "Southeast",
+    "agency": "Corebridge Financial"
+  },
+  "summary": {
+    "totalReps": 10,
+    "activeReps": 6,
+    "inactiveReps": 4,
+    "totalRevenue": "$284,560.00",
+    "pendingReassignments": 4,
+    "totalContracts": 38
+  },
+  "representatives": [
     {
+      "npn": "1234567",
+      "repCode": "CRGBF",
       "advisorName": "Raja Kumarasamy",
-      "id": "7777777-CRGBF",
-      "revenue": "$7777.77",
-      "lastActiveDate": "July 7th, 2027"
-    },
-    {
-      "agentName": "Raja Kumarasamy",
-      "agentId": "7777777-CRGBF",
       "agencyName": "Corebridge Financial",
-      "policyNumber": "7777777777"
+      "revenue": "$52,400.00",
+      "contracts": 6,
+      "lastActiveDate": "2026-02-10",
+      "status": "Active",
+      "licenseStatus": "Licensed",
+      "email": "raja.kumarasamy@corebridge.com",
+      "phone": "(512) 555-0101",
+      "contractList": [
+        { "contractNumber": "CONT10001", "policyType": "Annuity", "clientName": "George Harris", "premium": "$8,400.00", "effectiveDate": "2022-03-15", "status": "Active" },
+        { "contractNumber": "CONT10002", "policyType": "Life Insurance", "clientName": "Patricia Lewis", "premium": "$6,200.00", "effectiveDate": "2021-07-20", "status": "Active" },
+        { "contractNumber": "CONT10003", "policyType": "Annuity", "clientName": "Thomas Clark", "premium": "$11,000.00", "effectiveDate": "2023-01-10", "status": "Active" },
+        { "contractNumber": "CONT10004", "policyType": "Disability", "clientName": "Barbara Young", "premium": "$4,100.00", "effectiveDate": "2020-11-05", "status": "Active" },
+        { "contractNumber": "CONT10005", "policyType": "Life Insurance", "clientName": "Kevin Martinez", "premium": "$9,500.00", "effectiveDate": "2022-09-01", "status": "Active" },
+        { "contractNumber": "CONT10006", "policyType": "Annuity", "clientName": "Sandra White", "premium": "$13,200.00", "effectiveDate": "2023-06-22", "status": "Active" }
+      ]
     },
     {
-      "agentName": "Ramesh Subbiah",
-      "agentId": "11111-CRGBF",
+      "npn": "7654321",
+      "repCode": "JPMC",
+      "advisorName": "Leland Snyder",
+      "agencyName": "JP Morgan Chase",
+      "revenue": "$38,900.00",
+      "contracts": 5,
+      "lastActiveDate": "2024-11-15",
+      "status": "Inactive",
+      "licenseStatus": "Licensed",
+      "email": "leland.snyder@jpmorgan.com",
+      "phone": "(212) 555-0202",
+      "inactiveReason": "Advisor Retirement",
+      "contractList": [
+        { "contractNumber": "CONT20001", "policyType": "Annuity", "clientName": "Robert Allen", "premium": "$10,200.00", "effectiveDate": "2021-04-18", "status": "Orphaned" },
+        { "contractNumber": "CONT20002", "policyType": "Life Insurance", "clientName": "Linda Scott", "premium": "$7,800.00", "effectiveDate": "2020-08-30", "status": "Orphaned" },
+        { "contractNumber": "CONT20003", "policyType": "Annuity", "clientName": "William King", "premium": "$5,400.00", "effectiveDate": "2022-12-01", "status": "Orphaned" },
+        { "contractNumber": "CONT20004", "policyType": "Long-Term Care", "clientName": "Mary Wright", "premium": "$8,100.00", "effectiveDate": "2021-06-14", "status": "Orphaned" },
+        { "contractNumber": "CONT20005", "policyType": "Disability", "clientName": "James Lopez", "premium": "$7,400.00", "effectiveDate": "2023-02-09", "status": "Orphaned" }
+      ]
+    },
+    {
+      "npn": "2342335",
+      "repCode": "CRGBF",
+      "advisorName": "Mark Holloway",
       "agencyName": "Corebridge Financial",
-      "policyNumber": "111111111"
+      "revenue": "$21,750.00",
+      "contracts": 4,
+      "lastActiveDate": "2025-01-03",
+      "status": "Inactive",
+      "licenseStatus": "Unlicensed",
+      "email": "mark.holloway@corebridge.com",
+      "phone": "(512) 555-0303",
+      "inactiveReason": "Terminated",
+      "contractList": [
+        { "contractNumber": "CONT30001", "policyType": "Annuity", "clientName": "Susan Hall", "premium": "$6,500.00", "effectiveDate": "2022-05-20", "status": "Orphaned" },
+        { "contractNumber": "CONT30002", "policyType": "Life Insurance", "clientName": "Charles Adams", "premium": "$4,800.00", "effectiveDate": "2021-09-15", "status": "Orphaned" },
+        { "contractNumber": "CONT30003", "policyType": "Annuity", "clientName": "Jessica Baker", "premium": "$5,950.00", "effectiveDate": "2023-03-01", "status": "Orphaned" },
+        { "contractNumber": "CONT30004", "policyType": "Disability", "clientName": "Paul Nelson", "premium": "$4,500.00", "effectiveDate": "2020-11-28", "status": "Orphaned" }
+      ]
     },
     {
-      "agentName": "Leland Snyder",
-      "agentId": "222222-JPMC",
+      "npn": "1111111",
+      "repCode": "CRGBF",
+      "advisorName": "Ramesh Subbiah",
+      "agencyName": "Corebridge Financial",
+      "revenue": "$44,200.00",
+      "contracts": 5,
+      "lastActiveDate": "2026-02-18",
+      "status": "Active",
+      "licenseStatus": "Licensed",
+      "email": "ramesh.subbiah@corebridge.com",
+      "phone": "(512) 555-0404",
+      "contractList": [
+        { "contractNumber": "CONT40001", "policyType": "Annuity", "clientName": "Nancy Carter", "premium": "$9,200.00", "effectiveDate": "2022-01-11", "status": "Active" },
+        { "contractNumber": "CONT40002", "policyType": "Life Insurance", "clientName": "Donald Mitchell", "premium": "$8,700.00", "effectiveDate": "2021-10-05", "status": "Active" },
+        { "contractNumber": "CONT40003", "policyType": "Annuity", "clientName": "Karen Perez", "premium": "$7,900.00", "effectiveDate": "2023-04-18", "status": "Active" },
+        { "contractNumber": "CONT40004", "policyType": "Long-Term Care", "clientName": "Mark Roberts", "premium": "$10,400.00", "effectiveDate": "2022-07-22", "status": "Active" },
+        { "contractNumber": "CONT40005", "policyType": "Disability", "clientName": "Betty Turner", "premium": "$8,000.00", "effectiveDate": "2020-12-15", "status": "Active" }
+      ]
+    },
+    {
+      "npn": "2222222",
+      "repCode": "JPMC",
+      "advisorName": "Sonia Mikheeva",
       "agencyName": "JP Morgan Chase",
-      "policyNumber": "222222222"
+      "revenue": "$31,600.00",
+      "contracts": 4,
+      "lastActiveDate": "2026-01-30",
+      "status": "Active",
+      "licenseStatus": "Licensed",
+      "email": "sonia.mikheeva@jpmorgan.com",
+      "phone": "(212) 555-0505",
+      "contractList": [
+        { "contractNumber": "CONT50001", "policyType": "Annuity", "clientName": "Steven Phillips", "premium": "$9,100.00", "effectiveDate": "2022-08-14", "status": "Active" },
+        { "contractNumber": "CONT50002", "policyType": "Life Insurance", "clientName": "Dorothy Evans", "premium": "$7,500.00", "effectiveDate": "2021-03-27", "status": "Active" },
+        { "contractNumber": "CONT50003", "policyType": "Annuity", "clientName": "Joseph Collins", "premium": "$6,800.00", "effectiveDate": "2023-05-09", "status": "Active" },
+        { "contractNumber": "CONT50004", "policyType": "Long-Term Care", "clientName": "Sharon Stewart", "premium": "$8,200.00", "effectiveDate": "2022-10-31", "status": "Active" }
+      ]
     },
     {
-      "agentName": "Sonia Mikheeva",
-      "agentId": "3333333-JPMC",
-      "agencyName": "JP Morgan Chase",
-      "policyNumber": "3333333"
-    },
-    {
-      "agentName": "Rahul Tiwari",
-      "agentId": "4444444-ZNNA",
+      "npn": "3333333",
+      "repCode": "ZNNA",
+      "advisorName": "Rahul Tiwari",
       "agencyName": "Zinnia",
-      "policyNumber": "44444444"
+      "revenue": "$16,800.00",
+      "contracts": 3,
+      "lastActiveDate": "2024-09-22",
+      "status": "Inactive",
+      "licenseStatus": "Licensed",
+      "email": "rahul.tiwari@zinnia.com",
+      "phone": "(888) 555-0606",
+      "inactiveReason": "Business Consolidation",
+      "contractList": [
+        { "contractNumber": "CONT60001", "policyType": "Annuity", "clientName": "Daniel Sanchez", "premium": "$6,100.00", "effectiveDate": "2022-06-03", "status": "Orphaned" },
+        { "contractNumber": "CONT60002", "policyType": "Life Insurance", "clientName": "Carolyn Morris", "premium": "$5,700.00", "effectiveDate": "2021-11-19", "status": "Orphaned" },
+        { "contractNumber": "CONT60003", "policyType": "Disability", "clientName": "Kenneth Rogers", "premium": "$5,000.00", "effectiveDate": "2023-01-27", "status": "Orphaned" }
+      ]
     },
     {
-      "agentName": "Mallikarjuna Sungisetty",
-      "agentId": "5555555-JPMC",
+      "npn": "4444444",
+      "repCode": "JPMC",
+      "advisorName": "Mallikarjuna Sungisetty",
       "agencyName": "JP Morgan Chase",
-      "policyNumber": "5555555"
+      "revenue": "$27,910.00",
+      "contracts": 3,
+      "lastActiveDate": "2026-02-20",
+      "status": "Active",
+      "licenseStatus": "Licensed",
+      "email": "malli.sungisetty@jpmorgan.com",
+      "phone": "(212) 555-0707",
+      "contractList": [
+        { "contractNumber": "CONT70001", "policyType": "Annuity", "clientName": "Helen Reed", "premium": "$10,500.00", "effectiveDate": "2022-04-06", "status": "Active" },
+        { "contractNumber": "CONT70002", "policyType": "Life Insurance", "clientName": "Brian Cook", "premium": "$9,210.00", "effectiveDate": "2021-08-22", "status": "Active" },
+        { "contractNumber": "CONT70003", "policyType": "Annuity", "clientName": "Stephanie Morgan", "premium": "$8,200.00", "effectiveDate": "2023-07-14", "status": "Active" }
+      ]
     },
     {
-      "agentName": "Connor Bessell",
-      "agentId": "88888888-CRGBF",
+      "npn": "5555555",
+      "repCode": "CRGBF",
+      "advisorName": "Connor Bessell",
       "agencyName": "Corebridge Financial",
-      "policyNumber": "888888888"
+      "revenue": "$19,500.00",
+      "contracts": 3,
+      "lastActiveDate": "2025-03-11",
+      "status": "Inactive",
+      "licenseStatus": "Licensed",
+      "email": "connor.bessell@corebridge.com",
+      "phone": "(512) 555-0808",
+      "inactiveReason": "Organization Restructuring",
+      "contractList": [
+        { "contractNumber": "CONT80001", "policyType": "Annuity", "clientName": "Amanda Bailey", "premium": "$7,200.00", "effectiveDate": "2022-09-25", "status": "Orphaned" },
+        { "contractNumber": "CONT80002", "policyType": "Life Insurance", "clientName": "Gary Rivera", "premium": "$6,300.00", "effectiveDate": "2021-05-13", "status": "Orphaned" },
+        { "contractNumber": "CONT80003", "policyType": "Long-Term Care", "clientName": "Julie Cooper", "premium": "$6,000.00", "effectiveDate": "2023-03-30", "status": "Orphaned" }
+      ]
+    },
+    {
+      "npn": "6666666",
+      "repCode": "ZNNA",
+      "advisorName": "Priya Nair",
+      "agencyName": "Zinnia",
+      "revenue": "$18,700.00",
+      "contracts": 3,
+      "lastActiveDate": "2026-02-15",
+      "status": "Active",
+      "licenseStatus": "Licensed",
+      "email": "priya.nair@zinnia.com",
+      "phone": "(888) 555-0909",
+      "contractList": [
+        { "contractNumber": "CONT90001", "policyType": "Annuity", "clientName": "Raymond Ward", "premium": "$7,000.00", "effectiveDate": "2022-11-08", "status": "Active" },
+        { "contractNumber": "CONT90002", "policyType": "Life Insurance", "clientName": "Christine Torres", "premium": "$6,500.00", "effectiveDate": "2021-07-01", "status": "Active" },
+        { "contractNumber": "CONT90003", "policyType": "Disability", "clientName": "Eric Peterson", "premium": "$5,200.00", "effectiveDate": "2023-08-18", "status": "Active" }
+      ]
+    },
+    {
+      "npn": "9999999",
+      "repCode": "CRGBF",
+      "advisorName": "Daniel Cho",
+      "agencyName": "Corebridge Financial",
+      "revenue": "$12,800.00",
+      "contracts": 2,
+      "lastActiveDate": "2026-02-22",
+      "status": "Active",
+      "licenseStatus": "Licensed",
+      "email": "daniel.cho@corebridge.com",
+      "phone": "(512) 555-1010",
+      "contractList": [
+        { "contractNumber": "CONT00001", "policyType": "Annuity", "clientName": "Ruth Hughes", "premium": "$7,300.00", "effectiveDate": "2023-01-05", "status": "Active" },
+        { "contractNumber": "CONT00002", "policyType": "Life Insurance", "clientName": "Jacob Flores", "premium": "$5,500.00", "effectiveDate": "2022-06-17", "status": "Active" }
+      ]
     }
   ]
 }

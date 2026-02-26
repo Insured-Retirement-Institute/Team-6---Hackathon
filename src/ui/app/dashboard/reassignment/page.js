@@ -50,6 +50,7 @@ import {
 import { useSearchParams } from 'next/navigation';
 import mockData from '../bob-data-mock.json';
 import agentResponse from './agent-response.json';
+import failureResponseRaw from './failure_j.json';
 
 const reasons = [
   'Advisor Retirement',
@@ -59,6 +60,17 @@ const reasons = [
 ];
 
 const steps = ['Select Contracts & Agent', 'AI Agent Processing', 'Complete'];
+
+function parsePossiblyStringifiedJson(value) {
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return {};
+    }
+  }
+  return value ?? {};
+}
 
 // ── small helpers ─────────────────────────────────────────────────────────────
 function InfoRow({ label, value }) {
@@ -95,6 +107,12 @@ function ReassignmentContent() {
   const { representatives } = mockData;
   const fromRep = representatives.find((r) => r.npn === npn) ?? null;
   const activeReps = representatives.filter((r) => r.status === 'Active');
+  const resolvedAgentResponse = React.useMemo(() => {
+    if (npn === '2342335') {
+      return parsePossiblyStringifiedJson(failureResponseRaw);
+    }
+    return agentResponse;
+  }, [npn]);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [reason, setReason] = React.useState('');
@@ -412,9 +430,9 @@ function ReassignmentContent() {
               <Stack direction="row" alignItems="center" gap={1.5} sx={{ mb: 1 }}>
                 <CheckCircle color="success" />
                 <Typography variant="subtitle1" fontWeight={700} color="success.dark">
-                  Reassignment Acknowledged by Carrier
+                  { npn !== "7654321" ? "L&A Initiated-Awaiting Carrier Update" : "Reassignment Acknowledged by Carrier" }
                 </Typography>
-                <Chip label={agentResponse.FinalOutput.Status} color="success" size="small" />
+                <Chip label={resolvedAgentResponse?.FinalOutput?.Status ?? resolvedAgentResponse?.FinalOutcome?.status ?? 'Pending'} color="success" size="small" />
               </Stack>
               <Grid container spacing={2} sx={{ mt: 0.5 }}>
                 <Grid size={{ xs: 6, sm: 3 }}>
@@ -427,7 +445,14 @@ function ReassignmentContent() {
                   <InfoRow label="Contracts Moved" value={selectedContracts.length} />
                 </Grid>
                 <Grid size={{ xs: 6, sm: 3 }}>
-                  <InfoRow label="Carrier Response" value={agentResponse.FinalOutput.AgentChangeServiceResponse} />
+                  <InfoRow
+                    label="Carrier Response"
+                    value={
+                      resolvedAgentResponse?.FinalOutput?.AgentChangeServiceResponse
+                      ?? resolvedAgentResponse?.FinalOutcome?.relevant_details?.carrier_response
+                      ?? 'N/A'
+                    }
+                  />
                 </Grid>
               </Grid>
             </CardContent>
@@ -443,12 +468,12 @@ function ReassignmentContent() {
                     <Typography variant="subtitle2" color="text.secondary">Steps Performed by AI Agent</Typography>
                   </Stack>
                   <Stack gap={1.5}>
-                    {agentResponse.StepsPerformed.map((step, i) => (
+                    {(resolvedAgentResponse?.StepsPerformed ?? []).map((step, i) => (
                       <Stack key={i} direction="row" gap={1.5} alignItems="flex-start">
                         <Avatar sx={{ width: 22, height: 22, fontSize: 11, bgcolor: 'primary.main', mt: 0.2, flexShrink: 0 }}>
                           {i + 1}
                         </Avatar>
-                        <Typography variant="body2" color="text.secondary">{step}</Typography>
+                        <Typography variant="body2" color="text.secondary">{typeof step === 'string' ? step : step?.action}</Typography>
                       </Stack>
                     ))}
                   </Stack>
@@ -462,7 +487,10 @@ function ReassignmentContent() {
                 <CardContent>
                   <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }}>Final Output Summary</Typography>
                   <Stack gap={1}>
-                    {agentResponse.FinalOutput.bullets.map((b, i) => (
+                    {(
+                      resolvedAgentResponse?.FinalOutput?.bullets
+                      ?? [resolvedAgentResponse?.FinalOutcome?.summary].filter(Boolean)
+                    ).map((b, i) => (
                       <Stack key={i} direction="row" gap={1} alignItems="flex-start">
                         <CheckCircle color="success" sx={{ fontSize: 16, mt: 0.4, flexShrink: 0 }} />
                         <Typography variant="body2">{b}</Typography>
@@ -475,21 +503,31 @@ function ReassignmentContent() {
                     How the Conclusion Was Reached
                   </Typography>
                   <Stack gap={1}>
-                    {agentResponse.FinalOutput.Explanation_of_how_answer_was_determined.map((e, i) => (
+                    {(
+                      resolvedAgentResponse?.FinalOutput?.Explanation_of_how_answer_was_determined
+                      ?? [resolvedAgentResponse?.FinalOutcome?.explanation_of_how_answer_was_arrived_at].filter(Boolean)
+                    ).map((e, i) => (
                       <Typography key={i} variant="body2" color="text.secondary">
                         {i + 1}. {e}
                       </Typography>
                     ))}
                   </Stack>
 
-                  {agentResponse.Notes?.length > 0 && (
+                  {(
+                    resolvedAgentResponse?.Notes
+                    ?? resolvedAgentResponse?.FinalOutcome?.issues_noted_or_strange_findings
+                  )?.length > 0 && (
                     <>
                       <Divider sx={{ my: 2 }} />
                       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
                         Notes &amp; Recommendations
                       </Typography>
                       <Stack gap={1}>
-                        {agentResponse.Notes.map((n, i) => (
+                        {(
+                          resolvedAgentResponse?.Notes
+                          ?? resolvedAgentResponse?.FinalOutcome?.issues_noted_or_strange_findings
+                          ?? []
+                        ).map((n, i) => (
                           <Stack key={i} direction="row" gap={1} alignItems="flex-start">
                             <Warning color="warning" sx={{ fontSize: 16, mt: 0.4, flexShrink: 0 }} />
                             <Typography variant="body2" color="text.secondary">{n}</Typography>

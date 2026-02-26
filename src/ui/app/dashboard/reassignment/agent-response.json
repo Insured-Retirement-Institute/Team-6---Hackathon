@@ -1,6 +1,6 @@
 {
   "StepsPerformed": [
-    "Received request: Marketing director notified that PersonA (Mark, NPN: 2342335) was terminated and PersonB (Raja, NPN: 1234567) identified to take over contract CONT10001. Marketing Director: Arjun Sungisetty, Email: arjunshinde2@gmail.com.",
+    "Received request: Marketing director notified that PersonA (Leland, NPN: 7654321) was terminated and PersonB (Raja, NPN: 1234567) identified to take over contract CONT10001. Marketing Director: Arjun Sungisetty, Email: arjunshinde2@gmail.com.",
     "Step 1 - Agent eligibility check: Called license check tool with sid = '1234567' to verify PersonB's licensing status.",
     "License check tool response: 'Licensed'.",
     "Step 2 - Since PersonB is licensed, attempted to initiate AOR change with carrier: Called agentChangeService with npn = '1234567'.",
@@ -11,7 +11,7 @@
     "bullets": [
       "AOR change initiation status: ACKnowledged — the AOR change process has been initiated successfully.",
       "Contract: CONT10001",
-      "PersonA (current manager): Mark, NPN: 2342335",
+      "PersonA (current manager): Leland, NPN: 7654321",
       "PersonB (new agent to take over): Raja, NPN: 1234567",
       "Marketing Director: Arjun Sungisetty, Email: arjunshinde2@gmail.com",
       "License check result for PersonB: Licensed (verified via license check tool)",

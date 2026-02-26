@@ -60,7 +60,7 @@ export default function Header() {
               textDecoration: 'none',
             }}
           >
-            Team 6
+            AOR You Kidding Me?
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

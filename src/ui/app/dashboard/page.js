@@ -113,20 +113,21 @@ function DashboardContent() {
   const [tab, setTab] = React.useState(0);
 
   const searchParams = useSearchParams();
-  const completedNpn = searchParams.get('npn');
-  const success = searchParams.get('success');
+  const npnParam = searchParams.get('npn');
+  const isSuccess = searchParams.get('success') === 'true';
+  const completedNpn = isSuccess ? npnParam : null;
 
   const { distributor, summary, representatives } = mockData;
   const activeReps = representatives.filter((r) => r.status === 'Active');
   const inactiveReps = representatives.filter((r) => r.status === 'Inactive');
 
   React.useEffect(() => {
-    if (completedNpn && success) {
+    if (completedNpn && isSuccess) {
       setOpen(true);
       setStatusMessage('Success! Your reassignment is now complete.');
       setStatusSeverity('success');
     }
-  }, []);
+  }, [completedNpn, isSuccess]);
 
   const handleClose = (_, reason) => {
     if (reason === 'clickaway') return;

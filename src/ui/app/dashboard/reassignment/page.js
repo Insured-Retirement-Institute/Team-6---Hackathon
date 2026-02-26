@@ -42,6 +42,7 @@ import {
   Assignment,
   SwapHoriz,
   CheckCircle,
+  Cancel,
   Warning,
   ArrowBack,
   FiberManualRecord,
@@ -50,6 +51,7 @@ import {
 import { useSearchParams } from 'next/navigation';
 import mockData from '../bob-data-mock.json';
 import agentResponse from './agent-response.json';
+import failureResponseRaw from './failure_j.json';
 
 const reasons = [
   'Advisor Retirement',
@@ -59,6 +61,55 @@ const reasons = [
 ];
 
 const steps = ['Select Contracts & Agent', 'AI Agent Processing', 'Complete'];
+
+function parsePossiblyStringifiedJson(value) {
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return {};
+    }
+  }
+  return value ?? {};
+}
+
+function normalizeAgentResponse(rawResponse) {
+  const response = parsePossiblyStringifiedJson(rawResponse);
+
+  const stepsPerformed = Array.isArray(response?.StepsPerformed)
+    ? response.StepsPerformed.map((step) => {
+        if (typeof step === 'string') {
+          return step;
+        }
+        return [step?.action, step?.result_interpretation, step?.result]
+          .filter(Boolean)
+          .join(' — ');
+      }).filter(Boolean)
+    : [];
+
+  if (response?.FinalOutput) {
+    return {
+      stepsPerformed,
+      status: response?.FinalOutput?.Status || 'ACKnowledged',
+      carrierResponse: response?.FinalOutput?.AgentChangeServiceResponse || 'N/A',
+      bullets: response?.FinalOutput?.bullets ?? [],
+      explanation: response?.FinalOutput?.Explanation_of_how_answer_was_determined ?? [],
+      notes: response?.Notes ?? [],
+    };
+  }
+
+  return {
+    stepsPerformed,
+    status: response?.FinalOutcome?.status || 'ACKnowledgement',
+    carrierResponse: response?.FinalOutcome?.relevant_details?.carrier_response || 'N/A',
+    bullets: [response?.FinalOutcome?.summary].filter(Boolean),
+    explanation: [response?.FinalOutcome?.explanation_of_how_answer_was_arrived_at].filter(Boolean),
+    notes: [
+      ...(response?.FinalOutcome?.issues_noted_or_strange_findings ?? []),
+      ...(response?.FinalOutcome?.next_steps_recommended ?? []),
+    ],
+  };
+}
 
 // ── small helpers ─────────────────────────────────────────────────────────────
 function InfoRow({ label, value }) {
@@ -91,10 +142,16 @@ function ContractStatusChip({ status }) {
 function ReassignmentContent() {
   const searchParams = useSearchParams();
   const npn = searchParams.get('npn') ?? '';
+  const isFailureCase = npn === '2342335';
 
   const { representatives } = mockData;
   const fromRep = representatives.find((r) => r.npn === npn) ?? null;
   const activeReps = representatives.filter((r) => r.status === 'Active');
+
+  const aiResponse = React.useMemo(() => {
+    const source = npn === '2342335' ? failureResponseRaw : agentResponse;
+    return normalizeAgentResponse(source);
+  }, [npn]);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [reason, setReason] = React.useState('');
@@ -320,12 +377,12 @@ function ReassignmentContent() {
                 {/* To Rep preview card */}
                 <Grid size={{ xs: 12, sm: 4 }}>
                   {toRep ? (
-                    <Card elevation={0} sx={{ bgcolor: '#e8f5e9', border: '1px solid #a5d6a7', borderRadius: 2 }}>
+                    <Card elevation={0} sx={{ bgcolor: isFailureCase ? '#fdecea' : '#e8f5e9', border: isFailureCase ? '1px solid #ef9a9a' : '1px solid #a5d6a7', borderRadius: 2 }}>
                       <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
                         <Stack direction="row" alignItems="center" gap={1} sx={{ mb: 1 }}>
-                          <CheckCircle color="success" fontSize="small" />
-                          <Typography variant="caption" color="success.dark" fontWeight={700}>
-                            Selected Target Agent
+                          {isFailureCase ? <Cancel color="error" fontSize="small" /> : <CheckCircle color="success" fontSize="small" />}
+                          <Typography variant="caption" color={isFailureCase ? 'error.dark' : 'success.dark'} fontWeight={700}>
+                            {isFailureCase ? 'Target Agent Validation Failed' : 'Selected Target Agent'}
                           </Typography>
                         </Stack>
                         <Stack gap={0.5}>
@@ -407,14 +464,14 @@ function ReassignmentContent() {
       <Fade in={agentQuery === 'success'} unmountOnExit>
         <Box>
           {/* ── Summary bar ── */}
-          <Card elevation={0} sx={{ border: '1px solid #a5d6a7', borderRadius: 2, bgcolor: '#e8f5e9', mb: 3 }}>
+          <Card elevation={0} sx={{ border: isFailureCase ? '1px solid #ef9a9a' : '1px solid #a5d6a7', borderRadius: 2, bgcolor: isFailureCase ? '#fdecea' : '#e8f5e9', mb: 3 }}>
             <CardContent>
               <Stack direction="row" alignItems="center" gap={1.5} sx={{ mb: 1 }}>
-                <CheckCircle color="success" />
-                <Typography variant="subtitle1" fontWeight={700} color="success.dark">
-                  Reassignment Acknowledged by Carrier
+                {isFailureCase ? <Cancel color="error" /> : <CheckCircle color="success" />}
+                <Typography variant="subtitle1" fontWeight={700} color={isFailureCase ? 'error.dark' : 'success.dark'}>
+                  {isFailureCase ? 'Reassignment Failed — Manual Action Required' : 'Reassignment Acknowledged by Carrier'}
                 </Typography>
-                <Chip label={agentResponse.FinalOutput.Status} color="success" size="small" />
+                <Chip label={isFailureCase ? 'Failed' : aiResponse.status} color={isFailureCase ? 'error' : 'success'} size="small" />
               </Stack>
               <Grid container spacing={2} sx={{ mt: 0.5 }}>
                 <Grid size={{ xs: 6, sm: 3 }}>
@@ -427,7 +484,7 @@ function ReassignmentContent() {
                   <InfoRow label="Contracts Moved" value={selectedContracts.length} />
                 </Grid>
                 <Grid size={{ xs: 6, sm: 3 }}>
-                  <InfoRow label="Carrier Response" value={agentResponse.FinalOutput.AgentChangeServiceResponse} />
+                  <InfoRow label="Carrier Response" value={aiResponse.carrierResponse} />
                 </Grid>
               </Grid>
             </CardContent>
@@ -443,7 +500,7 @@ function ReassignmentContent() {
                     <Typography variant="subtitle2" color="text.secondary">Steps Performed by AI Agent</Typography>
                   </Stack>
                   <Stack gap={1.5}>
-                    {agentResponse.StepsPerformed.map((step, i) => (
+                    {aiResponse.stepsPerformed?.map((step, i) => (
                       <Stack key={i} direction="row" gap={1.5} alignItems="flex-start">
                         <Avatar sx={{ width: 22, height: 22, fontSize: 11, bgcolor: 'primary.main', mt: 0.2, flexShrink: 0 }}>
                           {i + 1}
@@ -462,9 +519,13 @@ function ReassignmentContent() {
                 <CardContent>
                   <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }}>Final Output Summary</Typography>
                   <Stack gap={1}>
-                    {agentResponse.FinalOutput.bullets.map((b, i) => (
+                    {aiResponse.bullets?.map((b, i) => (
                       <Stack key={i} direction="row" gap={1} alignItems="flex-start">
-                        <CheckCircle color="success" sx={{ fontSize: 16, mt: 0.4, flexShrink: 0 }} />
+                        {isFailureCase ? (
+                          <Cancel color="error" sx={{ fontSize: 16, mt: 0.4, flexShrink: 0 }} />
+                        ) : (
+                          <CheckCircle color="success" sx={{ fontSize: 16, mt: 0.4, flexShrink: 0 }} />
+                        )}
                         <Typography variant="body2">{b}</Typography>
                       </Stack>
                     ))}
@@ -475,21 +536,21 @@ function ReassignmentContent() {
                     How the Conclusion Was Reached
                   </Typography>
                   <Stack gap={1}>
-                    {agentResponse.FinalOutput.Explanation_of_how_answer_was_determined.map((e, i) => (
+                    {aiResponse.explanation?.map((e, i) => (
                       <Typography key={i} variant="body2" color="text.secondary">
                         {i + 1}. {e}
                       </Typography>
                     ))}
                   </Stack>
 
-                  {agentResponse.Notes?.length > 0 && (
+                  {aiResponse.notes?.length > 0 && (
                     <>
                       <Divider sx={{ my: 2 }} />
                       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
                         Notes &amp; Recommendations
                       </Typography>
                       <Stack gap={1}>
-                        {agentResponse.Notes.map((n, i) => (
+                        {aiResponse.notes?.map((n, i) => (
                           <Stack key={i} direction="row" gap={1} alignItems="flex-start">
                             <Warning color="warning" sx={{ fontSize: 16, mt: 0.4, flexShrink: 0 }} />
                             <Typography variant="body2" color="text.secondary">{n}</Typography>
@@ -507,13 +568,13 @@ function ReassignmentContent() {
           <Stack direction="row" justifyContent="flex-end" sx={{ mt: 3 }}>
             <Button
               variant="contained"
-              color="success"
+              color={isFailureCase ? 'error' : 'success'}
               size="large"
-              startIcon={<CheckCircle />}
-              href={`/dashboard?npn=${npn}&success=true`}
+              startIcon={isFailureCase ? <Cancel /> : <CheckCircle />}
+              href={`/dashboard?npn=${npn}&success=${isFailureCase ? 'false' : 'true'}`}
               sx={{ textTransform: 'none', fontWeight: 700, px: 4 }}
             >
-              Return to Dashboard
+              {isFailureCase ? 'Return to Dashboard (Failed)' : 'Return to Dashboard'}
             </Button>
           </Stack>
         </Box>

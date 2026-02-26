@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AOR Change — CONT10001 — Result</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --success: #1f9d55; /* green */
+      --danger: #dc2626;  /* red */
+      --accent: #2563eb;  /* blue */
+      --accent-2: #7c3aed; /* purple */
+      --shadow: 0 6px 18px rgba(20,24,40,0.06);
+      --radius: 12px;
+      --glass: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.75));
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 400px at 10% 10%, #eef2ff 0%, transparent 10%), var(--bg);
+      color: #0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      box-sizing:border-box;
+    }
+    .container{
+      max-width:980px;
+      margin:0 auto;
+    }
+
+    .header{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+    .brand{
+      background:linear-gradient(135deg,#4f46e5,#06b6d4);
+      color:white;
+      width:64px;height:64px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 30px rgba(99,102,241,0.14);
+      font-weight:700;font-size:20px;
+    }
+    .title{
+      display:flex;flex-direction:column;
+      gap:4px;
+    }
+    .title h1{margin:0;font-size:20px;}
+    .title p{margin:0;color:var(--muted);font-size:13px;}
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:14px;
+    }
+
+    .people{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .person{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .avatar{
+      width:56px;height:56px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+      font-size:18px;
+    }
+    .terminated{background:linear-gradient(135deg, #fff1f2, #fee2e2); color:var(--danger); border:1px solid rgba(220,38,38,0.08);}
+    .active{background:linear-gradient(135deg, #ecfdf5, #dcfce7); color:var(--success); border:1px solid rgba(31,157,85,0.08);}
+
+    .person .meta{font-size:13px;color:var(--muted);}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      background:rgba(15,23,42,0.03); font-size:13px;color:var(--muted);
+    }
+
+    .summary-list{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .row{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff, #fbfdff);
+      border:1px solid rgba(15,23,42,0.03);
+    }
+    .row .left{display:flex;gap:12px;align-items:center;}
+    .status{
+      padding:6px 10px;border-radius:999px;color:white;font-weight:600;font-size:13px;
+    }
+    .status.success{background:var(--success);}
+    .status.fail{background:var(--danger);}
+    .muted{color:var(--muted);font-size:13px;}
+
+    .result{
+      display:flex;gap:14px;align-items:center;
+      padding:14px;border-radius:12px;margin-top:12px;
+      background:linear-gradient(90deg, rgba(31,153,85,0.08), rgba(16,185,129,0.03));
+      border:1px solid rgba(31,153,85,0.08);
+    }
+    .result .bubble{
+      width:56px;height:56px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;
+    }
+    .note{color:#064e3b;font-weight:600;}
+
+    /* collapsible details style */
+    details {
+      margin-top:12px;
+      border-radius:10px;
+      background: linear-gradient(180deg,#ffffff,#fbfdff);
+      padding:12px;
+      border:1px solid rgba(15,23,42,0.04);
+    }
+    summary {
+      font-weight:600;
+      cursor:pointer;
+      list-style:none;
+      outline:none;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:8px;
+    }
+    summary::-webkit-details-marker { display:none; }
+    .chev{color:var(--muted);font-size:14px;}
+
+    .section-title{font-weight:700;margin-bottom:8px;color:#0f172a;}
+    .small{font-size:13px;color:var(--muted);}
+
+    .footer{
+      margin-top:18px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      color:var(--muted);
+    }
+
+    /* responsive */
+    @media (max-width:720px){
+      .people{flex-direction:column;align-items:flex-start;}
+      .row{flex-direction:column;align-items:flex-start;}
+      .result{flex-direction:column;align-items:flex-start;}
+    }
+
+    /* highlight colors for PersonA and PersonB */
+    .personA .avatar{background:linear-gradient(135deg,#fff7ed,#fff1e6);color:#b45309;border:1px solid rgba(180,83,9,0.06);}
+    .personB .avatar{background:linear-gradient(135deg,#ecfeff,#eff6ff);color:#0f172a;border:1px solid rgba(37,99,235,0.06);}
+
+    /* key-value grid */
+    .kv{
+      display:grid;grid-template-columns: 1fr 1fr;gap:10px;margin-top:12px;
+    }
+    .kv div{background:rgba(15,23,42,0.03);padding:10px;border-radius:8px;font-size:13px;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand"><i class="fa-solid fa-exchange-alt"></i></div>
+      <div class="title">
+        <h1>Agent-of-Record (AOR) Change — Contract CONT10001</h1>
+        <p>Marketing Director: Arjun Sungisetty • arjunshinde2@gmail.com</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+        <div>
+          <div class="section-title">Parties & Contract</div>
+          <div class="people">
+            <div class="person personA" title="Person A (Terminated)">
+              <div class="avatar terminated"><i class="fa-solid fa-user-slash" style="font-size:18px;"></i></div>
+              <div>
+                <div style="font-weight:700">Mark <span style="color:var(--muted);font-weight:600;">(Person A)</span></div>
+                <div class="meta">NPN: 2342335 • Status: Terminated</div>
+              </div>
+            </div>
+
+            <div style="width:16px"></div>
+
+            <div class="person personB" title="Person B (Candidate)">
+              <div class="avatar active"><i class="fa-solid fa-user-check" style="font-size:18px;"></i></div>
+              <div>
+                <div style="font-weight:700">Raja <span style="color:var(--muted);font-weight:600;">(Person B)</span></div>
+                <div class="meta">NPN: 1234567 • Candidate to take over contract</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:right;">
+          <div class="badge"><i class="fa-solid fa-file-contract" style="color:var(--accent);"></i> Contract: <strong style="margin-left:6px;color:#0f172a;">CONT10001</strong></div>
+          <div style="height:6px"></div>
+          <div class="small">Date: <strong id="dtnow"></strong></div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="section-title">Summary of actions performed</div>
+
+        <div class="summary-list">
+          <div class="row">
+            <div class="left">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#ecfdf5,#dcfce7);display:flex;align-items:center;justify-content:center;color:var(--success);font-size:18px;"><i class="fa-solid fa-id-badge"></i></div>
+              <div>
+                <div style="font-weight:600">License check for Person B (Raja)</div>
+                <div class="muted">Checked NPN: 1234567 via carrier license check</div>
+              </div>
+            </div>
+            <div><div class="status success">Success</div></div>
+          </div>
+
+          <div class="row">
+            <div class="left">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#fff7ed,#fff1e6);display:flex;align-items:center;justify-content:center;color:#b45309;font-size:18px;"><i class="fa-solid fa-user-gear"></i></div>
+              <div>
+                <div style="font-weight:600">Onboarding with carrier (LNA)</div>
+                <div class="muted">Not required — Raja is already licensed</div>
+              </div>
+            </div>
+            <div><div class="status success" style="background:linear-gradient(90deg,#d1fae5,#bbf7d0);color:var(--success);border:1px solid rgba(31,153,85,0.08);">Skipped</div></div>
+          </div>
+
+          <div class="row">
+            <div class="left">
+              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#ecfeff,#eff6ff);display:flex;align-items:center;justify-content:center;color:#0f172a;font-size:18px;"><i class="fa-solid fa-paper-plane"></i></div>
+              <div>
+                <div style="font-weight:600">Initiated AOR change with carrier (agentChangeService)</div>
+                <div class="muted">Called agent change API with NPN: 1234567</div>
+              </div>
+            </div>
+            <div><div class="status success">ACKnowledged</div></div>
+          </div>
+        </div>
+
+        <div class="result">
+          <div class="bubble"><i class="fa-solid fa-thumbs-up"></i></div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:var(--success);">AOR change initiated successfully</div>
+            <div class="small" style="margin-top:6px;">
+              Carrier response: <strong>"Agent change processed successfully and Acknowledged."</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="kv" style="margin-top:14px;">
+          <div>
+            <div style="font-weight:700">Marketing Director</div>
+            <div class="small">Arjun Sungisetty<br>arjunshinde2@gmail.com</div>
+          </div>
+          <div>
+            <div style="font-weight:700">Service Responses</div>
+            <div class="small">License check: Licensed<br>Agent change: Acknowledged</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <details>
+      <summary>
+        <span>Next steps & Confirmation</span>
+        <span class="chev"><i class="fa-solid fa-chevron-down"></i></span>
+      </summary>
+
+      <div style="margin-top:10px;">
+        <ul style="margin:8px 0 0 18px;color:var(--muted);line-height:1.6;">
+          <li><strong>Confirm carrier acknowledgment:</strong> Save carrier's confirmation and reference number in CRM and contract file.</li>
+          <li><strong>Notify parties:</strong> Send confirmation emails to PersonB (Raja) and internal stakeholders. (Marketing Director: Arjun)</li>
+          <li><strong>Update systems:</strong> Update policy/contract records to reflect Raja as managing agent. Update DTCC/clearing records if applicable.</li>
+          <li><strong>Follow-up:</strong> Verify any appointment/training updates on carrier portal (if required) and ensure commissions routing is updated.</li>
+          <li><strong>Audit:</strong> Retain copies of license check and agent change acknowledgment in the contract folder.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span>How this conclusion was reached</span>
+        <span class="chev"><i class="fa-solid fa-chevron-down"></i></span>
+      </summary>
+
+      <div style="margin-top:10px;color:var(--muted);line-height:1.6;">
+        <ol style="margin-left:18px;">
+          <li>Performed carrier license check for Raja using NPN = 1234567. Response: "Licensed".</li>
+          <li>Because Raja is licensed, onboarding (onboardLNA) was not needed.</li>
+          <li>Initiated agent change via agentChangeService using NPN = 1234567. Service returned: "Agent change processed successfully and Acknowledged."</li>
+          <li>Given the successful responses, the AOR change process is considered initiated and acknowledged by the carrier.</li>
+        </ol>
+
+        <div style="margin-top:10px;">
+          <strong>Notes & Observations:</strong>
+          <ul style="margin-left:18px;">
+            <li>The carrier service used for this exercise returns success for NPN 1234567 — this matched Person B (Raja).</li>
+            <li>In a live environment, additional checks often include: appointment status with the carrier, product-specific training/compliance confirmations, and commission routing verification. Those should be validated as a matter of best practice.</li>
+            <li>No unexpected problems occurred during this run. All service calls returned success.</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <div class="card" style="margin-top:12px;">
+      <div class="section-title">Raw process log (for audit)</div>
+      <div style="margin-top:8px;font-size:13px;color:var(--muted);">
+        <ul style="margin-left:18px;line-height:1.6;">
+          <li>Input: PersonB NPN = 1234567 (Raja)</li>
+          <li>licensecheck(sid=1234567) → "Licensed"</li>
+          <li>onboardLNA() → <em>not invoked (not required)</em></li>
+          <li>agentChangeService(npn=1234567) → "Agent change processed successfully and Acknowledged."</li>
+          <li>Final status: AOR change initiated and acknowledged by carrier for Contract CONT10001</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="small">Prepared by: IRI AOR Automation • Summary generated automatically</div>
+      <div class="small">If anything looks off, reply to Arjun at arjunshinde2@gmail.com</div>
+    </div>
+  </div>
+
+  <script>
+    // Set current date/time
+    document.getElementById('dtnow').textContent = new Date().toLocaleString();
+
+    // small enhancement: rotate chevron on open/close
+    document.querySelectorAll('details').forEach(d=>{
+      const c = d.querySelector('.chev i');
+      d.addEventListener('toggle', ()=>{
+        if(d.open) {
+          c.classList.remove('fa-chevron-down');
+          c.classList.add('fa-chevron-up');
+        } else {
+          c.classList.remove('fa-chevron-up');
+          c.classList.add('fa-chevron-down');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
